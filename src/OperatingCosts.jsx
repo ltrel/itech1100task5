@@ -9,6 +9,9 @@ function OperatingCosts() {
   const [annualString, setAnnualString] = useState(0)
   const [monthlyString, setMonthlyString] = useState(0)
   const [casualString, setCasualString] = useState(37)
+  const [monthsPerYearString, setMonthsPerYearString] = useState(12)
+  const [weeksPerYearString, setWeeksPerYearString] = useState(52)
+
   return (
     <Stack spacing={3}>
       <Typography variant='h4'>Task 1. Operating Costs</Typography>
@@ -27,12 +30,25 @@ function OperatingCosts() {
       </Stack>
       <Stack>
         <Typography variant='h5'>Labour costs</Typography>
-        <Typography variant='body1'>Casual Replacement Wage: </Typography>
+        <Typography variant='body1'>Casual replacement wage: </Typography>
         <Box>
           <NumberInput value={casualString} onValueChange={setCasualString} prefix={"$"}/>
         </Box>
       </Stack>
-      <EmployeeTable casualWage={myParseFloat(casualString)} weeksPerYear={52}/>
+      <EmployeeTable casualWage={myParseFloat(casualString)} weeksPerYear={myParseFloat(weeksPerYearString)}/>
+      <Stack>
+        <Typography variant='h5'>Misc. Parameters</Typography>
+        <Stack direction="row" spacing={2}>
+          <Stack>
+            <Typography variant='body1'>Months per year:</Typography>
+            <NumberInput value={monthsPerYearString} onValueChange={setMonthsPerYearString}/>
+          </Stack>
+          <Stack>
+            <Typography variant='body1'>Weeks per year:</Typography>
+            <NumberInput value={weeksPerYearString} onValueChange={setWeeksPerYearString}/>
+          </Stack>
+        </Stack>
+      </Stack>
     </Stack>
   )
 }
