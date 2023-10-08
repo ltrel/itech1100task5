@@ -1,15 +1,15 @@
 import { TableRow, TableCell } from "@mui/material"
 import { useState } from "react"
 import NumberInput from "./NumberInput"
-import { defaultFormatter, currencyFormatter } from "./util"
+import { defaultFormatter, currencyFormatter, myParseFloat } from "./util"
 
 function EmployeeRow({name, casualWage, weeksPerYear}) {
   const [wageString, setWageString] = useState(0)
   const [hourFieldStrings, setHourFieldStrings] = useState([0,0,0,0,0,0])
   const [weeksLeaveString, setWeeksLeaveString] = useState(0)
 
-  const wageNum = wageString === '' ? 0 : parseFloat(wageString)
-  const weeksLeaveNum = weeksLeaveString === '' ? 0 : parseFloat(weeksLeaveString)
+  const wageNum = myParseFloat(wageString)
+  const weeksLeaveNum = myParseFloat(weeksLeaveString)
   const weeklyHours = hourFieldStrings.reduce((acc, x) => {
     if (x === '') {
       return acc

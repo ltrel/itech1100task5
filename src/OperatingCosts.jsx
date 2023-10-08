@@ -1,8 +1,14 @@
 import { Typography, Stack, TextField, InputAdornment, Box, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import EmployeeRow from "./EmployeeRow"
 import EmployeeTable from "./EmployeeTable"
+import { useState } from "react"
+import NumberInput from "./NumberInput"
+import { myParseFloat } from "./util"
 
 function OperatingCosts() {
+  const [annualString, setAnnualString] = useState(0)
+  const [monthlyString, setMonthlyString] = useState(0)
+  const [casualString, setCasualString] = useState(37)
   return (
     <Stack spacing={3}>
       <Typography variant='h4'>Task 1. Operating Costs</Typography>
@@ -11,11 +17,11 @@ function OperatingCosts() {
         <Stack direction="row" spacing={2}>
           <Stack>
             <Typography variant='body1'>Rent and insurance (annual):</Typography>
-            <TextField variant="standard" InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}/>
+            <NumberInput value={annualString} onValueChange={setAnnualString} prefix={"$"}/>
           </Stack>
           <Stack>
             <Typography variant='body1'>Utilities (monthly): </Typography>
-            <TextField variant="standard" InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}/>
+            <NumberInput value={monthlyString} onValueChange={setMonthlyString} prefix={"$"}/>
           </Stack>
         </Stack>
       </Stack>
@@ -23,10 +29,10 @@ function OperatingCosts() {
         <Typography variant='h5'>Labour costs</Typography>
         <Typography variant='body1'>Casual Replacement Wage: </Typography>
         <Box>
-          <TextField variant="standard" InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}/>
+          <NumberInput value={casualString} onValueChange={setCasualString} prefix={"$"}/>
         </Box>
       </Stack>
-      <EmployeeTable casualWage={37} weeksPerYear={52}/>
+      <EmployeeTable casualWage={myParseFloat(casualString)} weeksPerYear={52}/>
     </Stack>
   )
 }

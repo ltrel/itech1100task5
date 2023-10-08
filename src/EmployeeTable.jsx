@@ -5,7 +5,7 @@ function EmployeeTable({casualWage, weeksPerYear}) {
   const employeeNames = ['Andres', 'Belle', 'Carl']
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Employee name</TableCell>
