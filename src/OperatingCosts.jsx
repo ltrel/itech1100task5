@@ -26,7 +26,7 @@ function OperatingCosts() {
           <TextField variant="standard" InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}/>
         </Box>
       </Stack>
-      <EmployeeTable/>
+      <EmployeeTable casualWage={37} weeksPerYear={52}/>
     </Stack>
   )
 }

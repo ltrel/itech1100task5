@@ -1,52 +1,41 @@
-import { TableRow, TableCell, TextField, InputAdornment } from "@mui/material"
+import { TableRow, TableCell } from "@mui/material"
 import { useState } from "react"
+import NumberInput from "./NumberInput"
+import { defaultFormatter, currencyFormatter } from "./util"
 
-function EmployeeRow({name}) {
-  const [hourFields, setHourFields] = useState([0,0,0,0,0,0,0])
-  const [wage, setWage] = useState(0)
+function EmployeeRow({name, casualWage, weeksPerYear}) {
+  const [wageString, setWageString] = useState(0)
+  const [hourFieldStrings, setHourFieldStrings] = useState([0,0,0,0,0,0])
+  const [weeksLeaveString, setWeeksLeaveString] = useState(0)
 
-  function handleHoursChange(event, index) {
-    if (isNaN(event.target.value) && event.target.value !== '.') {
-      return
+  const wageNum = wageString === '' ? 0 : parseFloat(wageString)
+  const weeksLeaveNum = weeksLeaveString === '' ? 0 : parseFloat(weeksLeaveString)
+  const weeklyHours = hourFieldStrings.reduce((acc, x) => {
+    if (x === '') {
+      return acc
     }
-    const newArray = [...hourFields]
-    newArray[index] = event.target.value
-    setHourFields(newArray)
-  }
-
-  function handleWageChange(event) {
-    if (isNaN(event.target.value) && event.target.value !== '.') {
-      return
-    }
-    setWage(event.target.value)
-  }
-
-  const totalHours = hourFields.reduce((acc, x) => acc + parseFloat(x), 0)
+    return acc + parseFloat(x)
+  }, 0)
+  const totalCost = wageNum * weeklyHours * weeksPerYear + casualWage * weeklyHours * weeksLeaveNum
 
   return (
     <TableRow>
       <TableCell>{name}</TableCell>
       <TableCell>
-        <TextField
-          variant='standard'
-          value={wage} onChange={handleWageChange}
-          InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
-        />
+        <NumberInput value={wageString} onValueChange={setWageString} prefix="$"/>
       </TableCell>
-      {hourFields.map((x, i) => {
+      {hourFieldStrings.map((x, i) => {
         return (
           <TableCell key={i}>
-            <TextField
-              variant='standard'
-              value={x}
-              onChange={(e) => handleHoursChange(e, i)}
-              InputProps={{onBlur: () => setHourFields(hourFields.with(i, 0))}}
-            />
+            <NumberInput value={x} onValueChange={(newVal) => setHourFieldStrings(hourFieldStrings.with(i, newVal))}/>
           </TableCell>
         )
       })}
-      <TableCell>{totalHours.toString()}</TableCell>
-      <TableCell>test2</TableCell>
+      <TableCell>
+        <NumberInput value={weeksLeaveString} onValueChange={setWeeksLeaveString}/>
+      </TableCell>
+      <TableCell>{defaultFormatter.format(weeklyHours)}</TableCell>
+      <TableCell>{currencyFormatter.format(totalCost)}</TableCell>
     </TableRow>
   )
 }

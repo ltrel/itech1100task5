@@ -1,7 +1,8 @@
 import { TableBody, TableContainer, TableHead, TableRow, TableCell, Table, Paper } from "@mui/material"
 import EmployeeRow from "./EmployeeRow"
 
-function EmployeeTable() {
+function EmployeeTable({casualWage, weeksPerYear}) {
+  const employeeNames = ['Andres', 'Belle', 'Carl']
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -21,9 +22,9 @@ function EmployeeTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          <EmployeeRow name={'Andres'}/>
-          <EmployeeRow name={'Belle'}/>
-          <EmployeeRow name={'Carl'}/>
+          {employeeNames.map((name => 
+            <EmployeeRow key={name} name={name} casualWage={casualWage} weeksPerYear={weeksPerYear}/>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
