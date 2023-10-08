@@ -1,12 +1,12 @@
 import { TableRow, TableCell } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import NumberInput from "./NumberInput"
 import { defaultFormatter, currencyFormatter, myParseFloat } from "./util"
 
-function EmployeeRow({name, casualWage, weeksPerYear}) {
-  const [wageString, setWageString] = useState(0)
-  const [hourFieldStrings, setHourFieldStrings] = useState([0,0,0,0,0,0])
-  const [weeksLeaveString, setWeeksLeaveString] = useState(0)
+function EmployeeRow({casualWage, weeksPerYear, onTotalChange, initialData}) {
+  const [wageString, setWageString] = useState(initialData.wage)
+  const [hourFieldStrings, setHourFieldStrings] = useState(initialData.hours)
+  const [weeksLeaveString, setWeeksLeaveString] = useState(initialData.weeksLeave)
 
   const wageNum = myParseFloat(wageString)
   const weeksLeaveNum = myParseFloat(weeksLeaveString)
@@ -18,9 +18,13 @@ function EmployeeRow({name, casualWage, weeksPerYear}) {
   }, 0)
   const totalCost = wageNum * weeklyHours * weeksPerYear + casualWage * weeklyHours * weeksLeaveNum
 
+  useEffect(() => {
+    onTotalChange(totalCost)
+  }, [wageString, hourFieldStrings, weeksLeaveString])
+
   return (
     <TableRow>
-      <TableCell>{name}</TableCell>
+      <TableCell>{initialData.name}</TableCell>
       <TableCell>
         <NumberInput value={wageString} onValueChange={setWageString} prefix="$"/>
       </TableCell>

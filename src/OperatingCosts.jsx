@@ -3,14 +3,39 @@ import EmployeeRow from "./EmployeeRow"
 import EmployeeTable from "./EmployeeTable"
 import { useState } from "react"
 import NumberInput from "./NumberInput"
-import { myParseFloat } from "./util"
+import { myParseFloat, currencyFormatter } from "./util"
+
+const initialEmployeeData = [
+  {
+    name: 'Andres',
+    wage: 0,
+    hours: [3.5,3.5,3.5,0,0,0],
+    weeksLeave: 0
+  },
+  {
+    name: 'Belle',
+    wage: 0,
+    hours: [0,0,0,3.5,3.5,3.5],
+    weeksLeave: 0
+  },
+  {
+    name: 'Carl',
+    wage: 25,
+    hours: [5,5,5,5,5,0],
+    weeksLeave: 4
+  }
+]
 
 function OperatingCosts() {
-  const [annualString, setAnnualString] = useState(0)
-  const [monthlyString, setMonthlyString] = useState(0)
+  const [annualString, setAnnualString] = useState(2950)
+  const [monthlyString, setMonthlyString] = useState(210)
   const [casualString, setCasualString] = useState(37)
   const [monthsPerYearString, setMonthsPerYearString] = useState(12)
   const [weeksPerYearString, setWeeksPerYearString] = useState(52)
+
+  const [labourTotal, setLabourTotal] = useState(0)
+  const fixedTotal = myParseFloat(annualString) + myParseFloat(monthlyString) * myParseFloat(monthsPerYearString)
+  const grandTotal = fixedTotal + labourTotal
 
   return (
     <Stack spacing={3}>
@@ -35,7 +60,12 @@ function OperatingCosts() {
           <NumberInput value={casualString} onValueChange={setCasualString} prefix={"$"}/>
         </Box>
       </Stack>
-      <EmployeeTable casualWage={myParseFloat(casualString)} weeksPerYear={myParseFloat(weeksPerYearString)}/>
+      <EmployeeTable
+        casualWage={myParseFloat(casualString)}
+        weeksPerYear={myParseFloat(weeksPerYearString)}
+        onTotalChange={setLabourTotal}
+        initialData={initialEmployeeData}
+      />
       <Stack>
         <Typography variant='h5'>Misc. Parameters</Typography>
         <Stack direction="row" spacing={2}>
@@ -48,6 +78,12 @@ function OperatingCosts() {
             <NumberInput value={weeksPerYearString} onValueChange={setWeeksPerYearString}/>
           </Stack>
         </Stack>
+      </Stack>
+      <Stack>
+        <Typography variant="h5">Results</Typography>
+        <Typography variant="body1">Total annual fixed costs: {currencyFormatter.format(fixedTotal)}</Typography>
+        <Typography variant="body1">Total annual labour costs: {currencyFormatter.format(labourTotal)}</Typography>
+        <Typography variant="body1">Grand total annual costs: {currencyFormatter.format(grandTotal)}</Typography>
       </Stack>
     </Stack>
   )
