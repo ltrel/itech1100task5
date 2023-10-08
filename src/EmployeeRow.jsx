@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import NumberInput from "./NumberInput"
 import { defaultFormatter, currencyFormatter, myParseFloat } from "./util"
 
-function EmployeeRow({casualWage, weeksPerYear, onTotalChange, initialData}) {
+function EmployeeRow({ casualWage, weeksPerYear, onTotalChange, initialData }) {
   const [wageString, setWageString] = useState(initialData.wage)
   const [hourFieldStrings, setHourFieldStrings] = useState(initialData.hours)
   const [weeksLeaveString, setWeeksLeaveString] = useState(initialData.weeksLeave)
@@ -26,17 +26,17 @@ function EmployeeRow({casualWage, weeksPerYear, onTotalChange, initialData}) {
     <TableRow>
       <TableCell>{initialData.name}</TableCell>
       <TableCell>
-        <NumberInput value={wageString} onValueChange={setWageString} prefix="$"/>
+        <NumberInput value={wageString} onValueChange={setWageString} prefix="$" />
       </TableCell>
       {hourFieldStrings.map((x, i) => {
         return (
           <TableCell key={i}>
-            <NumberInput value={x} onValueChange={(newVal) => setHourFieldStrings(hourFieldStrings.with(i, newVal))}/>
+            <NumberInput value={x} onValueChange={(newVal) => setHourFieldStrings(hourFieldStrings.with(i, newVal))} />
           </TableCell>
         )
       })}
       <TableCell>
-        <NumberInput value={weeksLeaveString} onValueChange={setWeeksLeaveString}/>
+        <NumberInput value={weeksLeaveString} onValueChange={setWeeksLeaveString} />
       </TableCell>
       <TableCell>{defaultFormatter.format(weeklyHours)}</TableCell>
       <TableCell>{currencyFormatter.format(totalCost)}</TableCell>

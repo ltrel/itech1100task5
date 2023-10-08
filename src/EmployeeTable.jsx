@@ -2,8 +2,8 @@ import { TableBody, TableContainer, TableHead, TableRow, TableCell, Table, Paper
 import { useEffect, useState } from "react"
 import EmployeeRow from "./EmployeeRow"
 
-function EmployeeTable({casualWage, weeksPerYear, onTotalChange, initialData}) {
-  const [employeeTotals, setEmployeeTotals] = useState([0,0,0])
+function EmployeeTable({ casualWage, weeksPerYear, onTotalChange, initialData }) {
+  const [employeeTotals, setEmployeeTotals] = useState([0, 0, 0])
 
   useEffect(() => {
     onTotalChange(employeeTotals.reduce((acc, x) => acc + x))

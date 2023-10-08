@@ -1,5 +1,5 @@
 import { TextField, InputAdornment } from "@mui/material"
-function NumberInput({value, onValueChange, prefix}) {
+function NumberInput({ value, onValueChange, prefix }) {
   function handleChange(event) {
     const newVal = event.target.value
     if (!isNaN(newVal) || newVal == '.') {

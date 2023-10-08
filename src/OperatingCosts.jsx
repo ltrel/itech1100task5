@@ -1,5 +1,4 @@
-import { Typography, Stack, TextField, InputAdornment, Box, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
-import EmployeeRow from "./EmployeeRow"
+import { Typography, Stack, Box } from "@mui/material"
 import EmployeeTable from "./EmployeeTable"
 import { useState } from "react"
 import NumberInput from "./NumberInput"
